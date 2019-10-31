@@ -1,0 +1,29 @@
+{
+  "name": "chess",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  },
+  "dependencies": {
+    "@chrisoakman/chessboardjs": "^1.0.0",
+    "bootstrap": "^4.3.1",
+    "chess.js": "^0.10.2",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "express-session": "^1.17.0",
+    "handlebars": "^4.4.5",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.16.0",
+    "socket.io": "^2.3.0",
+    "uuid": "^3.3.3"
+  }
+}

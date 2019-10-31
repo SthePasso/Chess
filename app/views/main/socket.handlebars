@@ -1,0 +1,32 @@
+<div class="row mt-3 ml-0">
+    <div class="col">
+        <button id="botao" class="btn btn-primary">Enviar um oi</button>
+        <input type="radio" name="sala" value="1" onclick="mudarSala(this);" checked> Sala 1
+        <input type="radio" name="sala" value="2" onclick="mudarSala(this);"> Sala 2        
+        <div id="msgs"></div>
+    </div>
+</div>
+
+<script>
+    const socket = io()
+    const botao = document.getElementById('botao');
+    const msgs = document.getElementById('msgs');
+    botao.onclick = () => {
+        socket.emit('oi','Oi!');
+    };
+    socket.on('connect', () => {
+        document.title = socket.id.substr(0,4);
+    });
+    socket.on('oi', (oi) => {
+        msgs.innerHTML += oi + '<br>';
+    });
+    function mudarSala (radio) {
+        socket.emit('mudarSala', radio.value);
+    }
+</script>
+
+
+
+
+
+

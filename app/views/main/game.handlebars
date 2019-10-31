@@ -1,0 +1,111 @@
+<div class="row ml-1 mt-4">
+  <div class="col">
+    <div id="board" style="width: 500px"></div>
+    <div id="status">A vez é do jogador <b>branco</b>.</div>
+  </div>
+</div>
+
+<script>
+  const socket = io();
+  const game = new Chess();
+  const color = '{{color}}';
+  const fen = 'start';
+  const partida = {{partida}};
+
+  game.load(fen); // fen é a posição das peças no tabuleiro
+
+  const board = Chessboard('board', {
+    draggable: true,
+    orientation: (color == 'w') ? 'white' : 'black',
+    position: fen,
+    moveSpeed: 'slow',
+    pieceTheme: '/img/chesspieces/wikipedia/{piece}.png',
+    onDragStart: onDragStart, // quando o usuário pega a peça, para começar seu movimento
+    onDrop: onDrop, // quando o usuário solta a peça, para encerrar seu movimento
+    onSnapEnd: onSnapEnd // quando um jogador come a peça do outro, ou quando o peao chega no topo do campo do outro
+  });
+
+  function onDragStart(source, piece, position, orientation) {
+
+    // nao permitir o movimento de peças em caso de game over
+    if (game.game_over()) return false;
+
+    // permitir apenas o movimento de peças de sua própria cor
+    if ((color === 'w' && piece.search(/^b/) !== -1) ||
+      (color === 'b' && piece.search(/^w/) !== -1)) {
+      return false
+    }
+
+    // o jogador só pode mover peças caso seja sua vez de jogar
+    if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+      (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+      return false
+    }
+  }
+
+  function onDrop(source, target) {
+
+    // verificar se o movimento feito é legal de acordo com as regras de xadrez
+    var move = game.move({//qual o movimento do usuario
+      from: source,
+      to: target,
+      promotion: 'q' // NOTA: Para manter a simplicidade, peões só poderão ser promovidos para rainhas
+    });
+
+    // movimento ilegal, vamos retroceder a peça para a posição original
+    if (move === null) return 'snapback'
+
+    // **** Usar SOCKET.IO para enviar o movimento para o adversário **** // 
+    socket.emit('move',{
+      from: source,
+      to: target,
+      promotion: 'q'
+    });
+    updateStatus();
+  }
+
+  function onSnapEnd() {
+    board.position(game.fen())
+  }
+
+  function updateStatus() {
+    var status = ''
+
+    var moveColor = '<b>branco</b>'
+    if (game.turn() === 'b') {
+      moveColor = '<b>preto</b>'
+    }
+
+    // checkmate?
+    if (game.in_checkmate()) {
+      status = 'É xeque-mate! Vitória do jogador ' + moveColor + '!'
+    }
+
+    // empate? (draw)
+    else if (game.in_draw()) {
+      status = 'O jogo empatou!'
+    }
+
+    // o jogo continua
+    else {
+      status = 'A vez é do jogador ' + moveColor + '.'
+
+      // check?
+      if (game.in_check()) {
+        status += ', o jogador ' + moveColor + ' está em xeque.'
+      }
+    }
+
+    document.getElementById('status').innerHTML = status;
+  }
+  socket.on('move',(move)=> {
+    board.move(move.from +'-' + move.to)
+    game.move({
+      from: move.from,
+      to: move.to,
+      promotion: 'q'
+    })
+    updateStatus();
+  });
+
+</script>

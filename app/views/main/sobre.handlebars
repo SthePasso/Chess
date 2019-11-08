@@ -1,0 +1,62 @@
+
+<body>
+  <div class="container">
+    
+    <div id="sobre">
+  <h1>O Jogo de Xadrez</h1>
+
+  <img src="http://bestanimations.com/Games/Chess/chess-animated-gif-2.gif" alt="" srcset="">
+
+  <p>O xadrez é um jogo de tabuleiro, de caráter competitivo, disputado entre dois participantes. Cada um é representado
+    por peças de cores opostas, geralmente são utilizadas pretas e brancas. O objetivo do jogo é conquistar o “rei” de
+    seu adversário.</p>
+
+  <p>Para jogar é necessário um tabuleiro composto por oito colunas e oito linhas, o que resulta em 64 casas possíveis
+    para a mobilidade das peças. As peças são compostas de oito peões, duas torres, dois cavalos, dois bispos, uma
+    rainha e um rei.</p>
+
+  <p>Cada peça tem sua particularidade no modo de movimentar-se sobre o tabuleiro. Ao peão, são apenas permitidos
+    movimentos frontais, de modo que o primeiro movimento de cada peão pode abranger duas casas, os outros movimentos se
+    restringem a uma casa à frente. Embora se movimente para frente, o ataque do peão sempre ocorre na diagonal. A torre
+    pode correr, sem restrições de número de casas, para frente/trás/direita/esquerda. O cavalo realiza movimentos em
+    “L” (duas casas em um sentido e uma casa em sentido perpendicular àquele), para qualquer direção. O movimento do
+    bispo ocorre, assim como no caso das torres, sem limitação de casas, porém apenas no sentido diagonal. A rainha tem
+    livre movimentação no jogo. O rei pode apenas ser movimentado de casa em casa, ainda que em qualquer direção do
+    tabuleiro.</p>
+
+  <p>A movimentação das peças, por parte dos jogadores, é feita a partir de estratégia bastante pensada. É por isso que
+    se costuma usar o xadrez como analogia para quaisquer outras ações de estratégias, como as ações políticas, por
+    exemplo.</p>
+
+</div>
+
+    <footer id="footer">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <p>Made by Sthefanie Passo</p>
+          <p>Code released under the <a href="https://github.com/thomaspark/bootswatch/blob/master/LICENSE">UFAM License</a>.</p>
+          <p>Based on <a href="https://getbootstrap.com" rel="nofollow">Bootstrap</a>. Icons from <a href="https://fontawesome.com/" rel="nofollow">Font Awesome</a>. Web fonts from <a href="https://fonts.google.com/" rel="nofollow">Google</a>.</p>
+
+        </div>
+      </div>
+
+    </footer>
+
+  </div>
+
+  <script src="/js/custom.js"></script>  
+    
+  <script>
+  var socket = io.connect();
+  socket.on('connect', function(data) {
+      socket.emit('join', 'Hello World from client');
+  });
+  socket.emit('chat message', 'ola ola');
+  socket.on('chat message', function(msg){
+    console.log(msg);
+  });  
+  </script> 
+
+</body>
+</html>

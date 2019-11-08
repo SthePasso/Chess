@@ -5,6 +5,7 @@ const http = require('http').createServer(app);
 const handlebars = require('express-handlebars');
 const router = require('./config/router')
 const io = require('socket.io')(http)
+const sass = require('node-sass-middleware');
 
 io.on('connect', (client) => {
 
@@ -31,9 +32,11 @@ io.on('connect', (client) => {
 });
 
 
-const port = process.env.PORTCHESS || 4444
+const port = process.env.PORTCHESS || 4567
 
 app.engine('handlebars', handlebars({ 
+  layoutsDir: __dirname + '/app/views/layout',
+  defaultLayout: 'main',
   partialsDir: __dirname + '/app/views',
   helpers: require(__dirname + '/app/views/helpers/helpers.js') 
 })); 
@@ -59,6 +62,14 @@ app.use('/css', [
 app.use('/img', [
   express.static(__dirname + '/public/img'),
 ]);
+
+app.use(sass({
+  src: __dirname + '/public/scss',
+  dest: __dirname + '/public/css',
+  debug: true,
+  outputStyle: 'compressed',
+  prefix: '/css'
+ })); 
 
 app.use(router);
 

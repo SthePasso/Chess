@@ -20,7 +20,7 @@ const socket = (req, res) => {
 }
 
 const sobre = (req, res) =>{
-  res.render('main/sobre', {layout:"main"});
+  res.render('main/sobre');
 }
 
 module.exports = { index, socket, sobre }

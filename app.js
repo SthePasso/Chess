@@ -7,6 +7,38 @@ const router = require('./config/router')
 const io = require('socket.io')(http)
 const sass = require('node-sass-middleware');
 
+app.use(sass({
+  src: __dirname + '/public/scss',
+  dest: __dirname + '/public/css',
+  debug: true,
+  outputStyle: 'compressed',
+  prefix: '/css'
+})); 
+
+app.use('/js', [
+  express.static(__dirname + '/node_modules/jquery/dist/'),
+  express.static(__dirname + '/node_modules/popper.js/dist/umd/'),
+  express.static(__dirname + '/node_modules/bootstrap/dist/js/'),
+  express.static(__dirname + '/node_modules/@chrisoakman/chessboardjs/dist/'),
+  express.static(__dirname + '/node_modules/chess.js/'),
+  express.static(__dirname + '/public/js')
+]);
+
+app.use('/css', [
+  express.static(__dirname + '/public/css'),
+]);
+
+app.use('/img', [
+  express.static(__dirname + '/public/img'),
+]);
+
+app.engine('handlebars', handlebars({
+  helpers: require(__dirname + '/app/views/helpers/helpers.js')
+}));
+
+app.set('view engine', 'handlebars');
+app.set('views', __dirname + '/app/views');
+
 io.on('connect', (client) => {
 
   console.log("usuario conectado");
@@ -32,44 +64,7 @@ io.on('connect', (client) => {
 });
 
 
-const port = process.env.PORTCHESS || 4567
-
-app.engine('handlebars', handlebars({ 
-  layoutsDir: __dirname + '/app/views/layout',
-  defaultLayout: 'main',
-  partialsDir: __dirname + '/app/views',
-  helpers: require(__dirname + '/app/views/helpers/helpers.js') 
-})); 
-
-app.set('view engine', 'handlebars');
-app.set('views', __dirname + '/app/views');
-
-app.use('/js', [
-  express.static(__dirname + '/node_modules/jquery/dist/'),
-  express.static(__dirname + '/node_modules/popper.js/dist/umd/'),
-  express.static(__dirname + '/node_modules/bootstrap/dist/js/'),
-  express.static(__dirname + '/node_modules/@chrisoakman/chessboardjs/dist/'),
-  express.static(__dirname + '/node_modules/chess.js/'),
-  express.static(__dirname + '/public/js')
-]);
-
-app.use('/css', [
-  express.static(__dirname + '/public/css/'),
-  express.static(__dirname + '/node_modules/bootstrap/dist/css/'),
-  express.static(__dirname + '/node_modules/@chrisoakman/chessboardjs/dist/'),
-]);
-
-app.use('/img', [
-  express.static(__dirname + '/public/img'),
-]);
-
-app.use(sass({
-  src: __dirname + '/public/scss',
-  dest: __dirname + '/public/css',
-  debug: true,
-  outputStyle: 'compressed',
-  prefix: '/css'
- })); 
+const port = process.env.PORTCHESS || 5567
 
 app.use(router);
 

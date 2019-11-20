@@ -7,13 +7,30 @@ const router = require('./config/router')
 const io = require('socket.io')(http)
 const sass = require('node-sass-middleware');
 
+const port = process.env.PORTCHESS || 7777
+const cookieParser = require('cookie-parser');
+const csrf = require('csurf');
+
+app.use(cookieParser());
+app.use(csrf({ cookie: true }));
+
+var session = require('express-session');
+app.use(session({
+  genid: (req) => {
+    //return uuid() // usamos UUIDs para gerar os SESSID
+  },
+  secret: 'Hi9Cf#mK98',
+  resave: false,
+  saveUninitialized: true
+}));
+
 app.use(sass({
   src: __dirname + '/public/scss',
   dest: __dirname + '/public/css',
   debug: true,
   outputStyle: 'compressed',
   prefix: '/css'
-})); 
+}));
 
 app.use('/js', [
   express.static(__dirname + '/node_modules/jquery/dist/'),
@@ -42,7 +59,7 @@ app.set('views', __dirname + '/app/views');
 io.on('connect', (client) => {
 
   console.log("usuario conectado");
-  const uid = client.id.substr(0,4);
+  const uid = client.id.substr(0, 4);
   var sala = 1;
   client.join(sala);
 
@@ -58,13 +75,10 @@ io.on('connect', (client) => {
     client.join(sala);
   });
 
-  client.on('move',(move) =>{
-    client.broadcast.emit('move',move);
+  client.on('move', (move) => {
+    client.broadcast.emit('move', move);
   });
 });
-
-
-const port = process.env.PORTCHESS || 5567
 
 app.use(router);
 

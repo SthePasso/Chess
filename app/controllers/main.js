@@ -53,8 +53,40 @@ const signup = (req, res) => {
   // }
 }
 
-const login = (req, res) => {
-  res.render('main/login');
+const login = async (req, res) => {
+  if (req.route.methods.get) {
+    if (req.session.uid) {
+      res.redirect('/');                
+    } else {
+      res.render('main/login', {csrfToken: req.csrfToken()});
+    }
+  } else {
+    var user = await User.findOne({ where: {email: req.body.email} });
+    if (user) {
+      bcrypt.compare(req.body.senha, user.senha, function(err, senhaok) {
+        console.log(senhaok);
+        if (senhaok) {
+          req.session.uid = user.id;   
+          req.session.nome = user.nome;   
+          res.redirect('/');   
+        } else {
+          // Caso o usuário digite uma senha inválida
+          res.render('main/login', { 
+            csrfToken: req.csrfToken() , 
+            erro: true, 
+            email: req.body.email 
+          });           
+        }
+      });     
+    } else {
+      // Caso o usuário digite um email inválido
+      res.render('main/login', { 
+        csrfToken: req.csrfToken() , 
+        erro: true, 
+        email: req.body.email 
+      });      
+    }
+  }
 }
 
 const logout = (req, res) => {

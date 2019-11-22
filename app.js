@@ -14,6 +14,13 @@ const csrf = require('csurf');
 app.use(cookieParser());
 app.use(csrf({ cookie: true }));
 
+// A variável expreq será passada para o helper isLogged, que é usada no layout
+// app.locals é uma forma de passar variáveis para as views e para os helpers
+app.use(function(req, res, next) {  
+  app.locals.expreq = req;
+  next();
+});
+
 var session = require('express-session');
 app.use(session({
   genid: (req) => {

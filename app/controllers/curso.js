@@ -3,7 +3,7 @@ var models = require('../models/index');
 var Curso = models.curso;
 
 const index = (req, res) => {
-
+    res.render('curso');
 };
 const read = (req, res) => { };
 

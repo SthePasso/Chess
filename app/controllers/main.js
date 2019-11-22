@@ -28,16 +28,16 @@ const sobre = (req, res) => {
 const signup = (req, res) => {
   // Dentro da função siginup
   res.render('main/signup');
-  bcrypt.genSalt(rounds, function (err, salt) {
-    bcrypt.hash(req.body.senha, salt, async (err, hash) => {
-      await User.create({
-        nome: req.body.nome,
-        email: req.body.email,
-        senha: hash,
-        id_curso: req.body.curso
-      });
-    });
-  });
+  // bcrypt.genSalt(rounds, function (err, salt) {
+  //   bcrypt.hash(req.body.senha, salt, async (err, hash) => {
+  //     await User.create({
+  //       nome: req.body.nome,
+  //       email: req.body.email,
+  //       senha: hash,
+  //       id_curso: req.body.curso
+  //     });
+  //   });
+  // });
   //var user = await User.findOne({ where: { email: req.body.email } });
   // if (user) {
   //   bcrypt.compare(req.body.senha, user.senha, (err, ok) => {
@@ -53,6 +53,10 @@ const signup = (req, res) => {
   // }
 }
 
+const login = (req, res) => {
+  res.render('main/login');
+}
+
 const logout = (req, res) => {
   req.session.destroy(function (err) {
     if (err) {
@@ -62,5 +66,5 @@ const logout = (req, res) => {
   });
 }
 
-module.exports = { index, socket, sobre, signup }
+module.exports = { index, socket, sobre, signup, login }
 

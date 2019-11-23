@@ -10,19 +10,22 @@ const read = (req, res) => { };
 // Curso Controller
 const create = async function (req, res) {
     if (req.route.methods.get) {
-        res.render('curso/create');
+        res.render('curso/create', {
+            csrf: req.csrfToken()
+        });
     } else {
-        try{
+        try {
             await Curso.create(req.body);
-        } catch (e){
+        } catch (e) {
             res.render('curso/create', {
-                curso:req.body,
-                errors:error.errors
+                curso: req.body,
+                errors: error.errors
             });
         }
     }
 };
-
+// Arquivo app/controlers/curso.js - Será preciso
+// enviar o csrf para a view de todos os formulários
 // res.render('curso/create', {
 //     csrf: req.csrfToken()
 // });

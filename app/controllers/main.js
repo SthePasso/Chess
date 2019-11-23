@@ -15,8 +15,6 @@ const index = (req, res) => {
   }
 }
 
-const bcrypt = require('bcryptjs');
-
 const socket = (req, res) => {
   res.render('main/socket');
 }
@@ -25,32 +23,41 @@ const sobre = (req, res) => {
   res.render('main/sobre');
 }
 
-const signup = (req, res) => {
+const partida = (req, res) => {
+  res.render('main/partida');
+}
+
+const ranking = (req, res) => {
+  res.render('main/ranking');
+}
+
+const bcrypt = require('bcryptjs');
+const signup = async  (req, res) => {
   // Dentro da função siginup
   res.render('main/signup');
-  // bcrypt.genSalt(rounds, function (err, salt) {
-  //   bcrypt.hash(req.body.senha, salt, async (err, hash) => {
-  //     await User.create({
-  //       nome: req.body.nome,
-  //       email: req.body.email,
-  //       senha: hash,
-  //       id_curso: req.body.curso
-  //     });
-  //   });
-  // });
-  //var user = await User.findOne({ where: { email: req.body.email } });
-  // if (user) {
-  //   bcrypt.compare(req.body.senha, user.senha, (err, ok) => {
-  //     if (ok) {
-  //       req.session.uid = user.id;
-  //       res.redirect('/');
-  //     } else {
-  //       res.render('main/login', {
-  //         csrf: req.csrfToken()
-  //       });
-  //     }
-  //   });
-  // }
+  bcrypt.genSalt(rounds, function (err, salt) {
+    bcrypt.hash(req.body.senha, salt, async (err, hash) => {
+      await User.create({
+        nome: req.body.nome,
+        email: req.body.email,
+        senha: hash,
+        id_curso: req.body.curso
+      });
+    });
+  });
+  var user = await User.findOne({ where: { email: req.body.email } });
+  if (user) {
+    bcrypt.compare(req.body.senha, user.senha, (err, ok) => {
+      if (ok) {
+        req.session.uid = user.id;
+        res.redirect('/');
+      } else {
+        res.render('main/login', {
+          csrf: req.csrfToken()
+        });
+      }
+    });
+  }
 }
 
 const login = async (req, res) => {
@@ -59,6 +66,7 @@ const login = async (req, res) => {
       res.redirect('/');                
     } else {
       res.render('main/login', {csrfToken: req.csrfToken()});
+      console.log('invalido');
     }
   } else {
     var user = await User.findOne({ where: {email: req.body.email} });
@@ -98,5 +106,5 @@ const logout = (req, res) => {
   });
 }
 
-module.exports = { index, socket, sobre, signup, login }
+module.exports = { index, socket, sobre, partida, ranking, signup, login, logout }
 

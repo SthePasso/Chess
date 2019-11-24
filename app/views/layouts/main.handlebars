@@ -3,10 +3,14 @@
 
 <head>
   <title>Xadrez</title>
+  <link rel="shortcut icon" href="/img/chesspieces/wikipedia/bQ.png" type="image/x-icon">
 
   <link rel="stylesheet" href="/css/bootstrap.css">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/chessboard-1.0.0.css">
+  <script src="/js/chess.min.js"></script>
+  <script src="/js/chessboard-1.0.0.js"></script>
+  <script src="/js/script.js"></script>
 </head>
 
 <body>
@@ -15,8 +19,8 @@
     <div class="container">
       <a href="/" class="navbar-brand">
         <h3>
-          <img class="logo" src="https://flaticons.net/gd/makefg.php?i=icons/Sports/Chess-King.png&r=255&g=255&b=255" style="width:36px" alt="" srcset="">
-          Xadrez
+          <img class="logo" src="/img/chesspieces/wikipedia/wQ.png" style="width:36px"
+            alt="" srcset=""> Xadrez
         </h3>
       </a>
       <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -25,21 +29,15 @@
           <li class="nav-item">
             <a class="nav-link" href="/partida">Nova Partida</a>
           </li>
-          {{/if}}
-
-          {{#if session.user}}
+          {{/if}} {{#if session.user}}
           <li class="nav-item">
             <a class="nav-link" href="/ranking">Raking</a>
           </li>
-          {{/if}}
-
-          {{#if session.user}}
+          {{/if}} {{#if session.user}}
           <li class="nav-item">
             <a class="nav-link" href="/curso">Cursos</a>
           </li>
-          {{/if}}
-
-          {{#if session.user}}
+          {{/if}} {{#if session.user}}
           <li class="nav-item">
             <a class="nav-link" href="/area">Áreas</a>
           </li>
@@ -53,15 +51,11 @@
           <li class="nav-item">
             <a class="nav-link" href="/login">Login</a>
           </li>
-          {{/unless}}
-
-          {{#unless session.user}}
+          {{/unless}} {{#unless session.user}}
           <li class="nav-item">
             <a class="nav-link" href="/signup">Sing Up</a>
           </li>
-          {{/unless}}
-
-          {{#if session.user}}
+          {{/unless}} {{#if session.user}}
           <li class="nav-item">
             <a class="nav-link" href="/logout">Logout[{{session.user.nome}}]</a>
           </li>
@@ -80,21 +74,38 @@
         <div class="col-lg-12">
 
           <ul class="list-unstyled">
-            <li class="float-lg-right"><a href="#top">Back to top</a></li>
-            <li><a href="https://blog.bootswatch.com" onclick="pageTracker._link(this.href); return false;">Blog</a>
+            <li class="float-lg-right">
+              <a href="#top">Topo da Página</a>
             </li>
-            <li><a href="https://blog.bootswatch.com/rss/">RSS</a></li>
-            <li><a href="https://twitter.com/bootswatch">Twitter</a></li>
-            <li><a href="https://github.com/thomaspark/bootswatch/">GitHub</a></li>
-            <li><a href="../help/#api">API</a></li>
-            <li><a href="../help/#donate">Donate</a></li>
+            <li>
+              <a href="https://www.facebook.com/sthefanie.passo" onclick="pageTracker._link(this.href); return false;">Facebook</a>
+            </li>
+            <li>
+              <a href="https://www.instagram.com/fannyepasso/">Instagram</a>
+            </li>
+            <li>
+              <a href="https://twitter.com/Sthefanie_Passo">Twitter</a>
+            </li>
+            <li>
+              <a href="https://github.com/SthePasso">GitHub</a>
+            </li>
           </ul>
-          <p>Made by <a href="https://thomaspark.co">Thomas Park</a>.</p>
-          <p>Code released under the <a href="https://github.com/thomaspark/bootswatch/blob/master/LICENSE">MIT
-              License</a>.</p>
-          <p>Based on <a href="https://getbootstrap.com" rel="nofollow">Bootstrap</a>. Icons from <a
-              href="https://fontawesome.com/" rel="nofollow">Font Awesome</a>. Web fonts from <a
-              href="https://fonts.google.com/" rel="nofollow">Google</a>.</p>
+
+          <footer id="footer">
+            <div class="text-center">
+
+              <p>Autora
+                <a href="https://github.com/SthePasso" rel="nofollow">Sthefanie Passo</a>.</p>
+              <p>Código feito no
+                <a href="https://github.com/SthePasso/Chess">Icomp/UFAM</a>.</p>
+              <p>Baseado no
+                <a href="https://bootswatch.com/" rel="nofollow">Bootstrap</a>. Inspiração no
+                <a href=" https://xadrezapp.herokuapp.com" rel="nofollow">Website</a> de Programação Web 2. Professor
+                <a href="https://github.com/dbfernandes/SkelChess" rel="nofollow">David Fernandes</a>.</p>
+
+            </div>
+
+          </footer>
 
         </div>
       </div>

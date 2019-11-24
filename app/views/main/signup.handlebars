@@ -1,33 +1,42 @@
 <form id="form-signup">
     <fieldset>
         <legend class="text-center">Criar Conta</legend>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="form-group">
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" class="form-control" name="nome" id="nome" value="{{user.nome}}" placeholder="Digite seu nome completo">
+                    <div class="invalid-feedback">O nome tem que ter entre 10 a 100 caracteres</div>
+                </div>
 
-        <div class="form-group">
-            <label for="nome">Nome Completo</label>
-            <input type="text" class="form-control" name="nome" id="nome" value="{{user.nome}}" placeholder="Digite seu nome completo">
-            <div class="invalid-feedback">O nome tem que ter entre 10 a 100 caracteres</div>
+                <div class="form-group">
+                    <label for="email">Endereço de Email</label>
+                    <input type="email" class="form-control" name="email" id="email" value="{{user.email}}" aria-describedby="emailHelp" placeholder="name@example.com">
+                    <div class="invalid-feedback">O email deve conter um domínio válido</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="senha">Senha de Acesso</label>
+                    <input type="password" class="form-control" name="senha" id="senha" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;">
+                    <small id="fileHelp" class="form-text text-muted">A senha precisa ter 6 caracteres ou mais</small>
+                    <div class="invalid-feedback">Deve ser criada uma senha maior</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="conf">Confirmar Senha de Acesso</label>
+                    <input type="password" class="form-control" name="conf" id="conf" value="{{user.nome}}" aria-describedby="emailHelp" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;">
+                    <div class="invalid-feedback">Senha incorreta.</div>
+                </div>
+
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="termo" id="termo">
+                    <label class="custom-control-label" for="termo">Eu li e concordo com os termos de serviço.</label>
+                    <div class="invalid-feedback">Você precisa concordar com os termos de serviço da aplicação.</div>
+                </div>
+
+                <input type="hidden" name="_csrf" value="{{csrf}}">
+                <button type="submit" id="criar-conta" class="btn btn-primary float-right">Criar Conta</button>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="email">Endereço de Email</label>
-            <input type="email" class="form-control" name="email" id="email" value="{{user.email}}" aria-describedby="emailHelp" placeholder="name@example.com">
-            <div class="invalid-feedback">O email deve conter um domínio válido</div>
-        </div>
-
-        <div class="form-group">
-            <label for="senha">Senha de Acesso</label>
-            <input type="password" class="form-control" name="senha" id="senha" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;">
-            <small id="fileHelp" class="form-text text-muted">A senha precisa ter 6 caracteres ou mais</small>
-            <div class="invalid-feedback">A senha tem menos de 6 caracteres</div>
-        </div>
-
-        <div class="form-group">
-            <label for="conf">Confirmar Senha de Acesso</label>
-            <input type="password" class="form-control" name="conf" id="conf" value="{{user.nome}}" aria-describedby="emailHelp" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;">
-            <div class="invalid-feedback">Senha incorreta.</div>
-        </div>
-
-        <input type="hidden" name="_csrf" value="{{csrf}}">
-        <button type="submit" id="criar-conta" class="btn btn-primary float-right">Criar Conta</button>
     </fieldset>
 </form>

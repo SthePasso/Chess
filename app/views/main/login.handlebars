@@ -1,16 +1,28 @@
 <form>
   <fieldset>
     <legend class="text-center">Login</legend>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Entrar com email">
-      <div class="invalid-feedback">Email não cadastrado, cadastre-se no Sign Up</div>
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Entrar com email">
+          <div class="invalid-feedback">Email não cadastrado, cadastre-se no Sign Up</div>
+        </div>
+
+        <div class="form-group">
+          <label for="senha">Senha</label>
+          <input type="password" class="form-control" id="senha" name="senha" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;">
+          <div class="invalid-feedback">Senha incorreta</div>
+        </div>
+
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" name="termo" id="termo">
+          <label class="custom-control-label" for="termo">Mantenha-me logado</label>
+        </div>
+
+        <button type="submit" id="entrar" class="btn btn-primary float-right">Entrar</button>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="senha">Senha</label>
-      <input type="password" class="form-control" id="senha" name="senha" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;">
-      <div class="invalid-feedback">Senha incorreta</div>
-    </div>
-    <button type="submit" id="entrar" class="btn btn-primary float-right">Entrar</button>
   </fieldset>
 </form>

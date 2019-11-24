@@ -47,7 +47,12 @@ $('#criar-conta').click(function () {
         $('#conf').removeClass('is-valid');
     }
 
-    console.log('botao');
+    if ($('#termo').click()){
+        $('#termo').removeClass('is-valid');
+    } else {
+        erro++
+        $('#termo').addClass('is-valid');
+    }
     if (erro > 0) return false;
 });
 
@@ -68,4 +73,10 @@ $('#entrar').click(function () {
     } else {
         $('#senha').removeClass('is-valid');
     }
+
+    if ($('#termo').click()){
+        // deve salvar o login e sanha digitados de algum modo
+    }
+
+    if (erro > 0) return false;
 });

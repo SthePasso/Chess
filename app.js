@@ -1,13 +1,13 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 const http = require('http').createServer(app);
 
 const handlebars = require('express-handlebars');
-const router = require('./config/router')
-const io = require('socket.io')(http)
+const router = require('./config/router');
+const io = require('socket.io')(http);
 const sass = require('node-sass-middleware');
 
-const port = process.env.PORTCHESS || 7777
+const port = process.env.PORTCHESS || 5555
 const cookieParser = require('cookie-parser');
 const csrf = require('csurf');
 

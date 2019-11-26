@@ -1,9 +1,9 @@
 {
     "development": {
-      "username": "XcR66kmHoh",
-      "password": "f6hiUSgcgU",
-      "database": "XcR66kmHoh",
-      "host": "remotemysql.com",
+      "username": "root",
+      "password": "$oliDeoGloria7",
+      "database": "chessapp",
+      "host": "localhost",
       "dialect": "mysql"
     },
     "test": {

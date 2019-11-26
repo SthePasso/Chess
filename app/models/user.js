@@ -27,12 +27,12 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     id_curso: {
-      allowNull: false,
+      allowNull: true,
       type: DataTypes.INTEGER
     }
   }, {
     underscored: true,
-    tableName: "user"
+    tableName: "Users"
   });
   user.associate = function(models) {
     user.belongsTo(models.partida);

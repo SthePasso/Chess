@@ -1,4 +1,4 @@
-<form id="form-signup">
+<form id="form-signup" method="POST" action="/signup">
     <fieldset>
         <legend class="text-center">Criar Conta</legend>
         <div class="row">
@@ -13,6 +13,17 @@
                     <label for="email">Endereço de Email</label>
                     <input type="email" class="form-control" name="email" id="email" value="{{user.email}}" aria-describedby="emailHelp" placeholder="name@example.com">
                     <div class="invalid-feedback">O email deve conter um domínio válido</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_curso">Área de Estudo</label>
+                    <select class="form-control" name="id_curso" id="id_curso">
+                        <option value=0>Selecione a Área</option>
+                        <option value=1>Ciências Exatas</option>
+                        <option value=2>Ciências Humanas</option>
+                        <option value=3>Ciência Biológicas</option>
+                    </select>
+                    <div class="invalid-feedback">Você deve informar a sua área de estudo</div>
                 </div>
 
                 <div class="form-group">

@@ -47,12 +47,20 @@ $('#criar-conta').click(function () {
         $('#conf').removeClass('is-valid');
     }
 
-    if ($('#termo').click()){
+    if ($('#id_curso').val() == 0) {
+        erro++;
+        $('#id_curso').addClass('is-invalid');
+    } else {
+        $('#id_curso').removeClass('is-valid');
+    }
+
+    if ($('#termo').click()) {
         $('#termo').removeClass('is-valid');
     } else {
         erro++
         $('#termo').addClass('is-valid');
     }
+
     if (erro > 0) return false;
 });
 
@@ -74,7 +82,7 @@ $('#entrar').click(function () {
         $('#senha').removeClass('is-valid');
     }
 
-    if ($('#termo').click()){
+    if ($('#termo').click()) {
         // deve salvar o login e sanha digitados de algum modo
     }
 

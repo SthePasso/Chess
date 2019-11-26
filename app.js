@@ -10,7 +10,9 @@ const sass = require('node-sass-middleware');
 const port = process.env.PORTCHESS || 5555
 const cookieParser = require('cookie-parser');
 const csrf = require('csurf');
+const uuid = require('uuid/v4');
 
+app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser());
 app.use(csrf({ cookie: true }));
 
@@ -24,7 +26,7 @@ app.use(function(req, res, next) {
 var session = require('express-session');
 app.use(session({
   genid: (req) => {
-    //return uuid() // usamos UUIDs para gerar os SESSID
+    return uuid() // usamos UUIDs para gerar os SESSID
   },
   secret: 'Hi9Cf#mK98',
   resave: false,

@@ -9,4 +9,14 @@ abra em "localhost:7777"
 
 Para telas de design: https://bootswatch.com/
 
-Acesse o banco de dados com: mysql -h localhost -u root -p
+
+# Banco de Dados:
+Sempre que for baixar a aplicação deve-se dar os seguintes comandos no diretório:
+npx sequelize migrate:all
+npx sequelize db:migrate
+
+- Acesse o banco de dados com: mysql -h localhost -u root -p
+- show databases;
+- use chessapp;
+- show tables;
+- select * from Users;

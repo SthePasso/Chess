@@ -35,11 +35,11 @@ module.exports = (sequelize, DataTypes) => {
     tableName: "Users"
   });
   user.associate = function(models) {
-    user.belongsTo(models.partida);
-    user.hasMany(models.partida);
-    user.hasMany(models.partida);
-    user.hasMany(models.partida);
-    user.hasMany(models.mensagem);
+    user.belongsTo(models.curso,  {foreignKey: 'id_curso', as: 'id_curso_fk'});
+    user.hasMany(models.partida,  {foreignKey: 'id_user_1', as: 'user1'});
+    user.hasMany(models.partida,  {foreignKey: 'id_user_2', as: 'user2'});
+    user.hasMany(models.partida,  {foreignKey: 'winner', as: 'campeao'});
+    user.hasMany(models.mensagem, {foreignKey: 'id_user', as: 'msg_user'});
     // associations can be defined here
   };
   return user;

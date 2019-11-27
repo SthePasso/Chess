@@ -19,10 +19,10 @@ module.exports = (sequelize, DataTypes) => {
     tableName: "partida"
   });
   partida.associate = function(models) {
-    partida.hasMany(models.user);
-    partida.hasMany(models.user);
-    partida.hasMany(models.user);
-    partida.belongsTo(models.mensagem);
+    partida.belongsTo(models.user,  {foreignKey: 'id_user_1', as: 'user1'});
+    partida.belongsTo(models.user,  {foreignKey: 'id_user_2', as: 'user2'});
+    partida.belongsTo(models.user,  {foreignKey: 'winner', as: 'campeao'});
+    partida.hasMany(models.mensagem,{foreignKey: 'id_partida', as: 'id_fk'});
     // associations can be defined here
   };
   return partida;

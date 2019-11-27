@@ -13,7 +13,6 @@ router.post('/login',             MainController.login);
 router.get('/socket',             MainController.socket);
 router.get('/:color',             MainController.index);
 router.get('/partida',            MainController.partida);//partida
-router.get('/partida',            MainController.partida);
 router.get('/ranking',            MainController.ranking);//ranking
 router.get('/logout',             MainController.logout)//logout
 

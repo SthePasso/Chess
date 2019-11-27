@@ -1,0 +1,69 @@
+<div class="row text-justify">
+    <div class="col-8 mt-4">
+        <p class="lead">Seja bem vindo ao aplicativo de partidas de xadrez do Instituto de Computação. Para iniciar uma nova partida, clique
+            na opção <a href="#">Nova Partida</a> do menu superior.
+        </p>
+    </div>
+    <div class="col-4">
+        <img class="w-75 p-3" src="https://thumbs.gfycat.com/UnfitShowyIndianpalmsquirrel-small.gif" alt="10x10">
+    </div>
+</div>
+
+{{#if minhasPartidas}}
+<legend>Minhas Partidas</legend>
+{{/if}}
+
+{{#each minhasPartidas}}
+<div class="small-board">
+    <a href="/partida/{{id}}">
+        <div id="board{{id}}"></div>
+        <div class="small-info">
+            <span class="white">
+                <i class="fas fa-chess-king"></i>
+            </span>
+            {{user1.nome}}<br>
+            <span class="black">
+                <i class="fas fa-chess-king"></i>
+            </span>
+            {{user2.nome}}<br>
+        </div>
+    </a>
+</div>
+<script>
+  Chessboard('board-{{id}}', {
+    orientation: 'white',
+    position: '{{fen}}',
+    showNotation: false
+  });
+</script>
+{{/each minhasPartidas}}
+
+
+{{#if usuarioAguarda}}
+<legend>Usuários aguardando oponentes</legend>
+{{/if}}
+
+{{#each usuarioAguarda}}
+<div class="small-board">
+    <a href="/partida/{{id}}">
+        <div id="board{{id}}"></div>
+        <div class="small-info">
+            <span class="white">
+                <i class="fas fa-chess-king"></i>
+            </span>
+            {{user1.nome}}<br>
+            <span class="black">
+                <i class="fas fa-chess-king"></i>
+            </span>
+            {{user2.nome}}<br>
+        </div>
+    </a>
+</div>
+<script>
+  Chessboard('board-{{id}}', {
+    orientation: 'white',
+    position: '{{fen}}',
+    showNotation: false
+  });
+</script>
+{{/each usuarioAguarda}}

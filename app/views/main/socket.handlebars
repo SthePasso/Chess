@@ -15,7 +15,7 @@
     const botao = document.getElementById('botao');
     const msgs = document.getElementById('msgs');
     botao.onclick = () => {
-        socket.emit('oi','Oi!');
+        socket.emit('oi','Hello!');
     };
     socket.on('connect', () => {
         document.title = socket.id.substr(0,4);
@@ -27,9 +27,3 @@
         socket.emit('mudarSala', radio.value);
     }
 </script>
-
-
-
-
-
-

@@ -9,6 +9,8 @@ abra em "localhost:7777"
 
 Para telas de design: https://bootswatch.com/
 
+Organização de elementos: https://getbootstrap.com/docs/3.4/css/
+
 
 # Banco de Dados:
 Sempre que for baixar a aplicação deve-se dar os seguintes comandos no diretório:

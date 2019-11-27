@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 var models = require('../models/index');
 const config = require('../../config/config.json');
+const Sequelize = require('sequelize');
 User = models.user;
 Partida = models.partida;
 Mensagem = models.mensagem;
@@ -8,15 +9,15 @@ Curso = models.curso;
 Area = models.area;
 
 const index = (req, res) => {
-  if (!req.params.color) {
-    res.render('main/choosecolor', { layout: 'main' });
-  } else {
-    res.render('main/game', {
-      layout: 'main',
-      color: req.params.color,
-      partida: 1
-    });
-  }
+  if (req.session.logado) {//ffaça um select válido
+    var minhasPartidas = sequelize.query(
+      'select Partidas.id from Users inner join Partidas on Users.id=Partidas.winner group by Users.id order by vitorias desc;' 
+    );
+    var usuarioAguarda = sequelize.query(
+      'select nome, count(winner) as vitorias from Users inner join Partidas on Users.id=Partidas.winner group by Users.id order by vitorias desc;' 
+    );
+    res.render('main/index', {minhasPartidas:minhasPartidas, usuarioAguarda:usuarioAguarda})
+  } else res.redirect('/login')
 }
 
 const socket = (req, res) => {
@@ -24,15 +25,31 @@ const socket = (req, res) => {
 }
 
 const sobre = (req, res) => {
-  res.render('main/partida');
+  res.render('main/sobre');
 }
 
 const partida = (req, res) => {
-  res.render('main/partida');
+  if (req.session.logado) {
+    if (!req.params.color) {
+      res.render('main/choosecolor', { layout: 'main' });
+    } else {
+      res.render('main/game', {
+        layout: 'main',
+        color: req.params.color,
+        partida: 1
+      });
+    }
+  } else res.redirect('/login');
 }
 
 const ranking = (req, res) => {
-  res.render('main/ranking');
+  if (req.session.logado) {
+    // console.log('ola') verificar
+    var consulta = sequelize.query(
+      'select nome, count(winner) as vitorias from Users inner join Partidas on Users.id=Partidas.winner group by Users.id order by vitorias desc;' 
+    );
+    res.render('main/ranking', {consulta});
+  } else res.redirect('/login');
 }
 
 const signup = async (req, res) => {
@@ -49,11 +66,10 @@ const signup = async (req, res) => {
           await User.create({
             nome: req.body.nome,
             email: req.body.email,
-            id_curso: req.body.curso,
+            id_curso: req.body.id_curso,
             senha: hash
           });
-          res.redirect('main/login');
-
+          res.redirect('/login');
         });
       });
 
@@ -68,11 +84,10 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
   if (req.route.methods.get) {
-    if (req.session.uid) {
+    if (req.session.logado) {
       res.redirect('/');
     } else {
       res.render('main/login', { csrfToken: req.csrfToken() });
-      console.log('invalido');
     }
   } else {
     var user = await User.findOne({ where: { email: req.body.email } });
@@ -80,10 +95,11 @@ const login = async (req, res) => {
       bcrypt.compare(req.body.senha, user.senha, function (err, senhaok) {
         console.log(senhaok);
         if (senhaok) {
-          req.session.uid = user.id;
+          req.session.logado = user.id;
           req.session.nome = user.nome;
-          res.redirect('/');
+          res.redirect('/');//logado
         } else {
+          console.log(incorreto);
           // Caso o usuário digite uma senha inválida
           res.render('main/login', {
             csrfToken: req.csrfToken(),

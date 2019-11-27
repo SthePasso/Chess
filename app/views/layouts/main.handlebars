@@ -25,19 +25,19 @@
       </a>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          {{#if session.user}}
+          {{#if session.logado}}
           <li class="nav-item">
             <a class="nav-link" href="/partida">Nova Partida</a>
           </li>
-          {{/if}} {{#if session.user}}
+          {{/if}} {{#if session.logado}}
           <li class="nav-item">
             <a class="nav-link" href="/ranking">Raking</a>
           </li>
-          {{/if}} {{#if session.user}}
+          {{/if}} {{#if session.logado}}
           <li class="nav-item">
             <a class="nav-link" href="/curso">Cursos</a>
           </li>
-          {{/if}} {{#if session.user}}
+          {{/if}} {{#if session.logado}}
           <li class="nav-item">
             <a class="nav-link" href="/area">Áreas</a>
           </li>
@@ -47,17 +47,17 @@
             <a class="nav-link" href="/sobre">Sobre</a>
           </li>
 
-          {{#unless session.user}}
+          {{#unless session.logado}}
           <li class="nav-item">
             <a class="nav-link" href="/login">Login</a>
           </li>
-          {{/unless}} {{#unless session.user}}
+          {{/unless}} {{#unless session.logado}}
           <li class="nav-item">
             <a class="nav-link" href="/signup">Sing Up</a>
           </li>
-          {{/unless}} {{#if session.user}}
+          {{/unless}} {{#if session.logado}}
           <li class="nav-item">
-            <a class="nav-link" href="/logout">Logout[{{session.user.nome}}]</a>
+            <a class="nav-link" href="/logout">Logout[{{session.nome}}]</a>
           </li>
           {{/if}}
 

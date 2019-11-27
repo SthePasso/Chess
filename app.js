@@ -7,7 +7,7 @@ const router = require('./config/router');
 const io = require('socket.io')(http);
 const sass = require('node-sass-middleware');
 
-const port = process.env.PORTCHESS || 5555
+const port = process.env.PORTCHESS || 7777
 const cookieParser = require('cookie-parser');
 const csrf = require('csurf');
 const uuid = require('uuid/v4');
@@ -64,6 +64,11 @@ app.engine('handlebars', handlebars({
 
 app.set('view engine', 'handlebars');
 app.set('views', __dirname + '/app/views');
+
+app.use('/',(req, res, next) => {
+  res.locals.session = req.session;
+  next();
+});
 
 io.on('connect', (client) => {
 

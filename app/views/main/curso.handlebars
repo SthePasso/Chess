@@ -1,7 +1,7 @@
-<form>
-    <fieldset>
-        <legend>Cursos</legend>
-        
+<legend class="text-center">
+    Ranking</legend>
+<div class="row">
+    <div class="col-md-8 offset-md-2">
         <table class="table table-hover">
             <tbody>
                 <tr class="table-light">
@@ -10,15 +10,18 @@
                     <td>Opções</td>
                 </tr>
                 <tr class="table-dark">
-                    <th scope="row">ICC017</th>
-                    <td>Engenharia de Software</td>
-                    <td>Column content</td>
+                    {{#each cursoAdd}}
+                    <th scope="row">sigla</th>
+                    <td>nome</td>
+                    <td class="delete-curso" href="#" data-id="1" data-nome={{nome}}>
+                        <i class="fa fa-trash-alt" aria-hidden="true"></i>
+                    </td>
+                    {{/each}}
                 </tr>
             </tbody>
         </table>
+    </div>
+</div>
 
-        <input type="hidden" name="_csrf" value="{{csrf}}">
-        <button type="submit" class="btn btn-primary float-right">Criar Conta</button>
-
-    </fieldset>
-</form>
+<input type="hidden" name="_csrf" value="{{csrf}}">
+<button type="submit" class="btn btn-primary float-right">Adicionar Curso</button>

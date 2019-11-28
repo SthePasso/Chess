@@ -1,54 +1,59 @@
 const bcrypt = require('bcryptjs');
-var models = require('../models/index');
+const  models = require('../models/index');
 const config = require('../../config/config.json');
 const Sequelize = require('sequelize');
-User = models.user;
-Partida = models.partida;
-Mensagem = models.mensagem;
-Curso = models.curso;
-Area = models.area;
+const User = models.user;
+const Partida = models.partida;
+const Mensagem = models.mensagem;
+const Curso = models.curso;
+const Area = models.area;
+const Op = models.Sequelize.Op;
 
-const index = (req, res) => {
+const index = async (req, res) => {
   if (req.session.logado) {//ffaça um select válido
-    var minhasPartidas = sequelize.query(
-      'select Partidas.id from Users inner join Partidas on Users.id=Partidas.winner group by Users.id order by vitorias desc;' 
-    );
-    var usuarioAguarda = sequelize.query(
-      'select nome, count(winner) as vitorias from Users inner join Partidas on Users.id=Partidas.winner group by Users.id order by vitorias desc;' 
-    );
-    res.render('main/index', {minhasPartidas:minhasPartidas, usuarioAguarda:usuarioAguarda})
+    const minhasPartidas = await Partida.findAll({ 
+      where: { [Op.or]: [{ id_user_1: req.session.logado }, { id_user_2: req.session.logado }] }, 
+      include: [{ model: User, as: 'user2' }, { model: User, as: 'user1' }] 
+    });
+    const usuarioAguarda = await Partida.findAll({ 
+      where: { id_user_2: null, id_user_1: { [Op.ne]: req.session.logado } }, 
+      include: [{ model: User, as: 'user1' }] 
+    });
+
+    res.render('main/index', { minhasPartidas, usuarioAguarda, uid: req.session.uid });
   } else res.redirect('/login')
 }
 
-const socket = (req, res) => {
+const socket = async (req, res) => {
   res.render('main/socket');
 }
 
-const sobre = (req, res) => {
-  res.render('main/sobre');
+const sobre = async (req, res) => {
+  res.render('main/sobre'); 
 }
 
-const partida = (req, res) => {
+const partida = async (req, res) => {
   if (req.session.logado) {
-    if (!req.params.color) {
-      res.render('main/choosecolor', { layout: 'main' });
-    } else {
+    // if (!req.params.color) {
+    //   res.render('main/choosecolor', { layout: 'main' });
+    // } else {
       res.render('main/game', {
         layout: 'main',
-        color: req.params.color,
+        color: 'w',
         partida: 1
       });
-    }
+    // }
   } else res.redirect('/login');
 }
 
-const ranking = (req, res) => {
+const ranking = async (req, res) => {
   if (req.session.logado) {
+    const consulta = await Partida.findAll({ 
+      where: { winner:{[Op.gt]: 0} }, 
+      include: [{ model: User, as: 'campeao' }] 
+    });
     // console.log('ola') verificar
-    var consulta = sequelize.query(
-      'select nome, count(winner) as vitorias from Users inner join Partidas on Users.id=Partidas.winner group by Users.id order by vitorias desc;' 
-    );
-    res.render('main/ranking', {consulta});
+    res.render('main/ranking', { consulta });
   } else res.redirect('/login');
 }
 

@@ -3,7 +3,12 @@ var models = require('../models/index');
 var Curso = models.curso;
 
 const index = (req, res) => {
-    res.render('curso');
+    // const cursoAdd = await Curso.findAll({
+    //     include: [{ model: Curso, required: true }],
+    //     limit: 10
+    // });
+    // // console.log('ola') verificar
+    // res.render('main/curso', { cursoAdd });
 };
 const read = (req, res) => { };
 

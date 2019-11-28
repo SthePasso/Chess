@@ -11,10 +11,12 @@ router.post('/signup',            MainController.signup);
 router.get('/login',              MainController.login);//login
 router.post('/login',             MainController.login);
 router.get('/socket',             MainController.socket);
-router.get('/:color',             MainController.index);
+
 router.get('/partida',            MainController.partida);//partida
 router.get('/ranking',            MainController.ranking);//ranking
 router.get('/logout',             MainController.logout)//logout
+router.get('/color',             MainController.index);//antes estava com /:color
+
 
 // CursoController
 router.get('/curso' ,               cursoController.index);//curso

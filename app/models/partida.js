@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     underscored: true,
-    tableName: "partida"
+    tableName: "Partidas"
   });
   partida.associate = function(models) {
     partida.belongsTo(models.user,  {foreignKey: 'id_user_1', as: 'user1'});

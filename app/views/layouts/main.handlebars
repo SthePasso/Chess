@@ -14,13 +14,11 @@
 </head>
 
 <body>
-
   <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark pd-5 text-center">
     <div class="container">
       <a href="/" class="navbar-brand">
         <h3>
-          <img class="logo" src="/img/chesspieces/wikipedia/wQ.png" style="width:36px"
-            alt="" srcset=""> Xadrez
+          <img class="logo" src="/img/chesspieces/wikipedia/wQ.png" style="width:36px" alt="" srcset=""> Xadrez
         </h3>
       </a>
       <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -37,10 +35,6 @@
           <li class="nav-item">
             <a class="nav-link" href="/curso">Cursos</a>
           </li>
-          {{/if}} {{#if session.logado}}
-          <li class="nav-item">
-            <a class="nav-link" href="/area">Áreas</a>
-          </li>
           {{/if}}
 
           <li class="nav-item">
@@ -56,8 +50,11 @@
             <a class="nav-link" href="/signup">Sing Up</a>
           </li>
           {{/unless}} {{#if session.logado}}
-          <li class="nav-item">
-            <a class="nav-link" href="/logout">Logout[{{session.nome}}]</a>
+          <li class="nav-item dropdown show">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/" role="button" aria-haspopup="false" aria-expanded="false">{{session.nome}}</a>
+            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 39px, 0px);">
+              <a class="dropdown-item" href="/logout">Logout</a>
+            </div>
           </li>
           {{/if}}
 
@@ -115,9 +112,9 @@
   <script src="/js/jquery.js"></script>
   <script src="/js/popper.js"></script>
   <script src="/js/bootstrap.min.js"></script>
-  <script src="/js/validacao.js"></script>
-  {{!-- <script src="/socket.io/socket.io.js"></script> --}}
-  {{!-- <script src="/js/all.min.js"></script> --}}
+  <script src="/js/validacao.js"></script> {{!--
+  <script src="/socket.io/socket.io.js"></script> --}} {{!--
+  <script src="/js/all.min.js"></script> --}}
 </body>
 
 </html>

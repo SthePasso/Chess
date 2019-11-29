@@ -4,7 +4,7 @@ const MainController = require('../app/controllers/main');
 const cursoController = require('../app/controllers/curso');
 
 
-router.get('/',                   MainController.index);
+router.get('/',                   estaLogado, MainController.index);
 router.get('/sobre',              MainController.sobre);//sobre
 router.get('/signup',             MainController.signup);//signup
 router.post('/signup',            MainController.signup);
@@ -12,10 +12,11 @@ router.get('/login',              MainController.login);//login
 router.post('/login',             MainController.login);
 router.get('/socket',             MainController.socket);
 
-router.get('/partida',            MainController.partida);//partida
-router.get('/ranking',            MainController.ranking);//ranking
-router.get('/logout',             MainController.logout)//logout
-router.get('/color',             MainController.index);//antes estava com /:color
+
+router.get('/partida',            estaLogado, MainController.partida);//partida
+router.get('/partida/:id',        estaLogado, MainController.partida);//partida
+router.get('/ranking',            estaLogado, MainController.ranking);//ranking
+router.get('/logout',             estaLogado, MainController.logout)//logout
 
 
 // CursoController
@@ -26,6 +27,13 @@ router.post('/curso/create' ,       cursoController.create);
 router.get('/curso/update/:id' ,    cursoController.update);
 router.post('/curso/update/:id' ,   cursoController.update);
 router.post('/curso/remove/:id' ,   cursoController.remove);
+
+
+function estaLogado(req, res, next) {
+    if (req.session.logado) {
+        next();
+    } else res.redirect('/login');
+}
 
 module.exports = router
 

@@ -14,7 +14,8 @@
     "nodemon": "^1.19.4"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.10.2",
+    "@chrisoakman/chessboardjs": "^1.0.0",
+    "@fortawesome/fontawesome-free": "^5.11.2",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.3.1",
     "chess.js": "^0.10.2",

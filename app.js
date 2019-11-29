@@ -1,16 +1,17 @@
 const express = require('express');
 const app = express();
 const http = require('http').createServer(app);
-
+const {Chess} = require('chess.js');
 const handlebars = require('express-handlebars');
 const router = require('./config/router');
 const io = require('socket.io')(http);
 const sass = require('node-sass-middleware');
 
-const port = process.env.PORTCHESS || 5555
+const port = process.env.PORTCHESS || 7777
 const cookieParser = require('cookie-parser');
 const csrf = require('csurf');
 const uuid = require('uuid/v4');
+const models = require('./app/models/index');
 
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser());
@@ -50,8 +51,11 @@ app.use('/js', [
   express.static(__dirname + '/public/js')
 ]);
 
+app.use('/webfonts', express.static(__dirname + '/node_modules/@fortawesome/fontawesome-free/webfonts'),)
+
 app.use('/css', [
   express.static(__dirname + '/public/css'),
+  express.static(__dirname + '/node_modules/@chrisoakman/chessboardjs/dist/'),
 ]);
 
 app.use('/img', [
@@ -90,6 +94,13 @@ io.on('connect', (client) => {
   });
 
   client.on('move', (move) => {
+    const novosValores = {fen: move.position};
+    const game = new Chess(move.position);
+    if(game.game_over()){
+      novosValores.winner = game.turn() == 'w'? move.id_user_1 : move.id_user_2 ;
+    }
+    models.partida.update(novosValores,{where: {id:move.partida}});
+    
     client.broadcast.emit('move', move);
   });
 });

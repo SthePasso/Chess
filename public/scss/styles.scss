@@ -361,3 +361,21 @@ pre {
       text-align: center
   }
 }
+
+
+#status {
+  font-size: 20px;
+}
+.small-board a {
+  color: white;
+}
+
+.small-board .black {
+  color: black;
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white
+}
+
+.small-board .white {
+  color: white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black
+}

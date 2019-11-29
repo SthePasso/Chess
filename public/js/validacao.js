@@ -88,3 +88,30 @@ $('#entrar').click(function () {
 
     if (erro > 0) return false;
 });
+
+$('#criar-curso').click(function () {
+
+    var erro = 0;
+    if ($('#sigla').val().length < 10 || $('#sigla').val().length > 100) {
+        erro++;
+        $('#sigla').addClass('is-invalid');
+    } else {
+        $('#sigla').removeClass('is-valid');
+    }
+
+    if ($('#nome').val().length < 10 || $('#nome').val().length > 100) {
+        erro++;
+        $('#nome').addClass('is-invalid');
+    } else {
+        $('#nome').removeClass('is-valid');
+    }
+
+    if ($('#descricao').val().length < 10 || $('#descricao').val().length > 100) {
+        erro++;
+        $('#descricao').addClass('is-invalid');
+    } else {
+        $('#descricao').removeClass('is-valid');
+    }
+
+    if (erro > 0) return false;
+});

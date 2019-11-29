@@ -1,3 +1,7 @@
+<script src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/chessboard-1.0.0.min.js"></script> 
+
+
 <div class="row text-justify">
     <div class="col-8 mt-4">
         <p class="lead">Seja bem vindo ao aplicativo de partidas de xadrez do Instituto de Computação. Para iniciar uma nova partida, clique
@@ -16,16 +20,20 @@
 {{#each minhasPartidas}}
 <div class="small-board">
     <a href="/partida/{{id}}">
-        <div id="board{{id}}"></div>
+        <div id="board-{{id}}"></div>
         <div class="small-info">
             <span class="white">
                 <i class="fas fa-chess-king"></i>
             </span>
             {{user1.nome}}<br>
+            {{#if user2.nome}}
             <span class="black">
                 <i class="fas fa-chess-king"></i>
             </span>
-            {{user2.nome}}<br>
+            {{user2.nome}}<br> 
+            {{else}}
+            <span>Aguardando oponente</span>    
+            {{/if}}
         </div>
     </a>
 </div>
@@ -38,6 +46,8 @@
 </script>
 {{/each}}
 
+<div class="clearfix"></div>
+<br>
 
 {{#if usuarioAguarda}}
 <legend>Usuários aguardando oponentes</legend>
@@ -46,16 +56,12 @@
 {{#each usuarioAguarda}}
 <div class="small-board">
     <a href="/partida/{{id}}">
-        <div id="board{{id}}"></div>
+        <div id="board-{{id}}"></div>
         <div class="small-info">
             <span class="white">
                 <i class="fas fa-chess-king"></i>
             </span>
             {{user1.nome}}<br>
-            <span class="black">
-                <i class="fas fa-chess-king"></i>
-            </span>
-            {{user2.nome}}<br>
         </div>
     </a>
 </div>
@@ -67,3 +73,6 @@
   });
 </script>
 {{/each}}
+
+
+<div class="clearfix"></div>

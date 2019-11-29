@@ -20,11 +20,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     underscored: true,
-    tableName: "curso"
+    tableName: "Cursos"
   });
   curso.associate = function(models) {
-    curso.belongsTo(models.area);
+    curso.belongsTo(models.area, { as:'area', foreignKey: 'id_area'});
     // associations can be defined here
   };
   return curso;
 };
+

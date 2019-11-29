@@ -2,15 +2,11 @@
 var models = require('../models/index');
 var Curso = models.curso;
 
-const index = (req, res) => {
-    // const cursoAdd = await Curso.findAll({
-    //     include: [{ model: Curso, required: true }],
-    //     limit: 10
-    // });
-    // // console.log('ola') verificar
-    // res.render('main/curso', { cursoAdd });
+const index = async (req, res) => {
+    const cursos = await Curso.findAll();
+    res.render('main/curso', { cursos });
 };
-const read = (req, res) => { };
+const read = async (req, res) => { };
 
 // Curso Controller
 const create = async function (req, res) {
@@ -21,14 +17,35 @@ const create = async function (req, res) {
     } else {
         try {
             await Curso.create(req.body);
+            res.redirect('/curso');
         } catch (e) {
+            console.log(e);
             res.render('curso/create', {
                 curso: req.body,
-                errors: error.errors
+                errors: e.errors,
+                csrf: req.csrfToken()
             });
         }
     }
 };
+
+    // try {
+    //   bcrypt.genSalt(10, function (err, salt) {
+    //     bcrypt.hash(req.body.senha, salt, async (err, hash) => {
+    //       await User.create({
+    //         nome: req.body.nome,
+    //         email: req.body.email,
+    //         id_curso: req.body.id_curso,
+    //         senha: hash
+    //       });
+    //       res.redirect('/login');
+    //     });
+    //   });
+
+    // } 
+
+
+
 // Arquivo app/controlers/curso.js - Será preciso
 // enviar o csrf para a view de todos os formulários
 // res.render('curso/create', {

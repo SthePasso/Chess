@@ -17,10 +17,15 @@
     <div class="col-sm-6">
       <div class="chat h-100" role="document">
         <div class="modal-content h-100" id="conversa">
-          <ul id="msg">{{!-- mensagem --}}</ul>         
+          <div class="modal-header">
+          <h5 class="modal-title" id="oponente">Oponente{{!-- oponente --}}</h5>
+          </div>
+          <div class="modal-body">
+          <ul id="msg">{{!-- mensagem --}}</ul>
+          </div>
         </div>
         {{!-- Botão --}}
-        <div class="modal-footer row w-100 position-absolute" style="bottom: 0;">
+        <div class=" modal-footer row w-100 position-absolute" style="bottom: 0;">
           <div class="form-group col-12">
             <label for="exampleTextarea">Escreva sua Mensagem...</label>
             <textarea class="form-control" id="textMessage" rows="3"></textarea>
@@ -38,7 +43,6 @@
 <script src="/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="/js/chess.min.js"></script>
 <script type="text/javascript" src="/js/chessboard-1.0.0.min.js"></script> 
-<script src="/js/jquery.js"></script>
 
 {{!-- LÓGICA DO CHAT --}}
 <script>
@@ -55,10 +59,13 @@
   socket.on('oi', (oi) => {
     msgs.innerHTML += oi + '<br>';
   });
+
+  
 </script>
 
+{{!-- <script>
 
-{{!-- (function () {
+  (function () {
 
   $("#chat-history").scrollTop($('#messages').height());
 
@@ -128,7 +135,8 @@
       </li>`;
 
     $("#messages").append(newMessage);
-  } --}}
+  }
+</script> --}}
 
 
 
@@ -136,9 +144,12 @@
 <script>
   const game = new Chess();
   const color = '{{color}}';
-  const fen = 'start';
-  const partida = {{ partida }};
-
+  const fen = '{{partida.fen}}';
+  const partida = '{{ partida.id }}';
+  const id_user_1 = '{{ partida.id_user_1}}';
+  const id_user_2 = '{{ partida.id_user_2}}';
+  const my_name = '{{session.nome}}';
+  const oponente = id_user_1 == '{{session.logado}}'? '{{partida.user2.nome}}' : '{{partida.user1.nome}}' ;
   game.load(fen); // fen é a posição das peças no tabuleiro
 
   const board = Chessboard('board', {
@@ -185,9 +196,13 @@
 
     // **** Usar SOCKET.IO para enviar o movimento para o adversário **** // 
     socket.emit('move', {
+      partida: partida,
+      id_user_1: id_user_1, 
+      id_user_2: id_user_2, 
       from: source,
       to: target,
-      promotion: 'q'
+      promotion: 'q',
+      position: game.fen()
     });
     updateStatus();
   }
@@ -226,12 +241,17 @@
 
     document.getElementById('status').innerHTML = status;
   }
+
   socket.on('move', (move) => {
     board.move(move.from + '-' + move.to)
     game.move({
+      partida: partida,
+      id_user_1: id_user_1, 
+      id_user_2: id_user_2,
       from: move.from,
       to: move.to,
-      promotion: 'q'
+      promotion: 'q',
+      position: game.fen()
     })
     updateStatus();
   });

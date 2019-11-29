@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const  models = require('../models/index');
+const models = require('../models/index');
 const config = require('../../config/config.json');
 const Sequelize = require('sequelize');
 const User = models.user;
@@ -10,18 +10,16 @@ const Area = models.area;
 const Op = models.Sequelize.Op;
 
 const index = async (req, res) => {
-  if (req.session.logado) {//ffaça um select válido
-    const minhasPartidas = await Partida.findAll({ 
-      where: { [Op.or]: [{ id_user_1: req.session.logado }, { id_user_2: req.session.logado }] }, 
-      include: [{ model: User, as: 'user2' }, { model: User, as: 'user1' }] 
-    });
-    const usuarioAguarda = await Partida.findAll({ 
-      where: { id_user_2: null, id_user_1: { [Op.ne]: req.session.logado } }, 
-      include: [{ model: User, as: 'user1' }] 
-    });
-
-    res.render('main/index', { minhasPartidas, usuarioAguarda, uid: req.session.uid });
-  } else res.redirect('/login')
+  const minhasPartidas = await Partida.findAll({ 
+    where: { [Op.or]: [{ id_user_1: req.session.logado }, { id_user_2: req.session.logado }] }, 
+    include: [{ model: User, as: 'user2' }, { model: User, as: 'user1' }] 
+  });
+  const usuarioAguarda = await Partida.findAll({ 
+    where: { id_user_2: null, id_user_1: { [Op.ne]: req.session.logado } }, 
+    include: [{ model: User, as: 'user1' }] 
+  });
+  console.log(usuarioAguarda);
+  res.render('main/index', { minhasPartidas, usuarioAguarda, uid: req.session.uid });
 }
 
 const socket = async (req, res) => {
@@ -33,28 +31,50 @@ const sobre = async (req, res) => {
 }
 
 const partida = async (req, res) => {
-  if (req.session.logado) {
-    // if (!req.params.color) {
-    //   res.render('main/choosecolor', { layout: 'main' });
-    // } else {
-      res.render('main/game', {
-        layout: 'main',
-        color: 'w',
-        partida: 1
+  const id = req.session.logado;
+  const partidaId = req.params.id;
+
+  if(partidaId){
+    let partida = await Partida.findByPk(partidaId, {
+      include: [
+        { model: User, as: 'user2' },
+        { model: User, as: 'user1' }
+      ]
+    });
+    if(!partida){
+      return res.redirect("/");
+    }
+    const criador = partida.id_user_1==id ;
+    if(!criador && !partida.id_user_2){
+      await partida.update({id_user_2:id})
+      partida = await Partida.findByPk(partidaId, {
+        include: [
+          { model: User, as: 'user2' },
+          { model: User, as: 'user1' }
+        ]
       });
-    // }
-  } else res.redirect('/login');
+    }
+    return res.render("main/game", {
+      color: criador? 'w':'b',
+      partida: partida 
+    })
+  }
+  
+  let semOp = await Partida.findOne({ where:{id_user_1:id, id_user_2:null} }) 
+  if(!semOp){
+    semOp = await Partida.create({id_user_1:id, fen:'start'})
+  }
+
+  res.redirect("/partida/"+semOp.id)
 }
 
 const ranking = async (req, res) => {
-  if (req.session.logado) {
-    const consulta = await Partida.findAll({ 
-      where: { winner:{[Op.gt]: 0} }, 
-      include: [{ model: User, as: 'campeao' }] 
-    });
-    // console.log('ola') verificar
-    res.render('main/ranking', { consulta });
-  } else res.redirect('/login');
+  const consulta = await Partida.findAll({ 
+    where: { winner:{[Op.gt]: 0} }, 
+    include: [{ model: User, as: 'campeao' }] 
+  });
+  // console.log('ola') verificar
+  res.render('main/ranking', { consulta });
 }
 
 const signup = async (req, res) => {

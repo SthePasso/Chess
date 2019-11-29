@@ -9,19 +9,23 @@
                     <td>Nome do Curso</td>
                     <td>Opções</td>
                 </tr>
+                {{#each cursos}}
                 <tr class="table-dark">
-                    {{#each cursoAdd}}
-                    <th scope="row">sigla</th>
-                    <td>nome</td>
-                    <td class="delete-curso" href="#" data-id="1" data-nome={{nome}}>
+
+                    <th scope="row">{{sigla}}</th>
+                    <td>{{nome}}</td>
+                    <td class="delete-curso" href="#" data-id="1" data-nome="{{nome}}">
                         <i class="fa fa-trash-alt" aria-hidden="true"></i>
                     </td>
-                    {{/each}}
                 </tr>
+                {{/each}}
             </tbody>
         </table>
+
+    <input type="hidden" name="_csrf" value="{{csrf}}">
+    <a type="submit" class="btn btn-primary float-right" href="/curso/create" >Adicionar Curso</a>
+
+
     </div>
 </div>
 
-<input type="hidden" name="_csrf" value="{{csrf}}">
-<button type="submit" class="btn btn-primary float-right">Adicionar Curso</button>

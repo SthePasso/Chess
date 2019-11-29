@@ -1,49 +1,52 @@
-<form>
+<form method="POST" action="/curso/create">
     <fieldset>
         <legend class="text-center">Adicionar Curso</legend>
 
         <div class="form-group">
             <label for="sigla">Sigla</label>
             <input type="text" class="form-control" name="sigla" id="sigla" value="{{curso.sigla}}"
-                placeholder="ICC000">
+                placeholder="IEC000">
+            <div class="invalid-feedback">Adicione uma sigla válida.</div>
         </div>
 
         <div class="form-group">
             <label for="curso">Nome do Curso</label>
-            <input type="text" class="form-control" id="curso" value="{{curso.nome}}" placeholder="Digite o nome do Curso">
+            <input type="text" class="form-control" id="nome" name="nome" value="{{curso.nome}}" placeholder="Digite o nome do Curso">
+            <div class="invalid-feedback">Adicione um curso da UFAM válido</div>
         </div>
 
         <div class="form-group">
             <label for="desc">Descrição</label>
-            <textarea class="form-control" id="desc" value="{{curso.descricao}}" rows="3"></textarea>
+            <textarea class="form-control" id="descricao" name="descricao" value="{{curso.descricao}}" rows="3"></textarea>
+             <div class="invalid-feedback">Descrição Inválida, adicione mais detalhes do seu curso</div>
         </div>
 
         <fieldset class="form-group">
-            <legend>Area de Estudo na UFAM</legend>
-            <div class="form-check">
+            <legend>Área de Estudo na UFAM</legend>
+            <div class="form-check" >
                 <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="optionsRadios" id="1"
-                        value="0" checked="">
+                    <input type="radio" name="id_area" class="form-check-input" id="1"
+                        value=1 checked="">
                     Ciências Exatas
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="optionsRadios" id="2"
-                        value="1">
+                    <input type="radio" name="id_area" class="form-check-input" id="2"
+                        value=2>
                     Ciências Humanas
                 </label>
             </div>
             <div class="form-check">
                 <label class="2">
-                    <input type="radio" class="form-check-input" name="optionsRadios" id="3"
-                        value="2">
+                    <input type="radio" name="id_area" class="form-check-input" name="optionsRadios" id="3"
+                        value=3>
                     Ciências Biológicas
                 </label>
             </div>
         </fieldset>
 
         <input type="hidden" name="_csrf" value="{{csrf}}">
-        <button type="submit" class="btn btn-primary float-right">Criar Curso</button>
+        <button type="submit" id="cria-curso" class="btn btn-primary float-right">Criar Curso</button>
     </fieldset>
 </form>

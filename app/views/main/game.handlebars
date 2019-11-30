@@ -22,7 +22,7 @@
             {{!-- oponente --}}</h5>
           </div>
           <div class="modal-body">
-          <ul id="msg">{{!-- mensagem --}}</ul>
+            <ul id="msg">{{!-- mensagem --}}</ul>
           </div>
         </div>
         {{!-- Botão --}}
@@ -45,76 +45,47 @@
 <script type="text/javascript" src="/js/chess.min.js"></script>
 <script type="text/javascript" src="/js/chessboard-1.0.0.min.js"></script> 
 
-{{!-- LÓGICA DO CHAT --}}
 <script>
   const socket = io();
   const botao = document.getElementById('botao');
   const msgs = document.getElementById('msg');
+  const game = new Chess();
+  const color = '{{color}}';
+  const fen = '{{partida.fen}}';
+  const partida = '{{ partida.id }}';
+  const id_user_1 = '{{ partida.id_user_1}}';
+  const id_user_2 = '{{ partida.id_user_2}}';
+  const my_name = '{{session.nome}}';
+  const oponente = id_user_1 == '{{session.logado}}'? '{{partida.user2.nome}}' : '{{partida.user1.nome}}' ;
 //  const oponente = id_user_1 == '{{session.logado}}'? '{{partida.user2.nome}}' : '{{partida.user1.nome}}' ;
   
-  
+//Lógica do Chat  
   botao.onclick = () => {
+    console.log(">>>>>>>>>>>>>>>");
+    /*let mensagem = {
+      id_partida: partida,
+      id_user: { id: session.logado, nome: my_name},
+      color: color,//acho
+      mensagem: $("#textMessage").val(),
+      created_at: new Date(Date.now()).toLocaleString()
+    };*/
     var message = document.getElementById('textMessage');
     socket.emit('oi', message.value);
+    appendMensagem('right');
+    $("#chat-history").scrollTop($('#messages').height());
   }
   socket.on('connect', () => {
     document.title = socket.id.substr(0, 4);
   });
   socket.on('oi', (oi) => {
     msgs.innerHTML += oi + '<br>';
-  });
-
-  
-</script>
-
-{{!-- <script>
-
-  (function () {
-
-  $("#chat-history").scrollTop($('#messages').height());
-
-  const socket = io();
-  const partida = 44;
-  const user_w = '16';
-  const user_b = '15';
-  const user_current = '16';
-  const my_color = 'white';
-  const my_name = 'Sthefanie Jofer Gomes Passo';
-  const op_color = 'black';
-  const op_name = 'Rayane M. Pinheiro';
-  const $status = $('#status');
-
-  socket.emit('b_ok', { partida:partida });
-
-  $("#enviar").click(function () {
-    let mensagem = {
-      partida: 44,
-      user: { id: user_current, nome: my_name},
-      color: my_color,
-      mensagem: $("#message-to-send").val(),
-      date: new Date(Date.now()).toLocaleString()
-    };
-    socket.emit('mensagem', mensagem);
-    $("#message-to-send").val("");
-    appendMensagem(mensagem, 'right', my_color);
-    $("#chat-history").scrollTop($('#messages').height());
-  });  
-
-  $("#message-to-send").keypress(function (e) {
-    if(e.which == 13) {
-      $("#enviar").click();
-      return false;
-    }   
-  });
-
-  socket.on('mensagem', function(mensagem){
-    appendMensagem(mensagem, 'left', op_color);
+    appendMensagem('right');
     $("#chat-history").scrollTop($('#messages').height());
   });
 
-  function appendMensagem(mensagem, align, color) {
+  function appendMensagem(align) {
 
-    if (align == 'left') {
+    /*if (align == 'left') {
       var messageData = 
         `<div class="message-data">
           <span class="message-piece"><i class="fas fa-chess-king"></i></span>              
@@ -128,7 +99,7 @@
           <span class="message-data-name" >${mensagem.user.nome}</span>          
           <span class="message-piece"><i class="fas fa-chess-king"></i></span>              
         </div>`;      
-    }
+    }*/
 
     var newMessage = 
      `<li class="${align}-message ${color}-message clearfix">
@@ -140,20 +111,8 @@
 
     $("#messages").append(newMessage);
   }
-</script> --}}
 
-
-
-{{!-- LÓGICA DO GAME --}}
-<script>
-  const game = new Chess();
-  const color = '{{color}}';
-  const fen = '{{partida.fen}}';
-  const partida = '{{ partida.id }}';
-  const id_user_1 = '{{ partida.id_user_1}}';
-  const id_user_2 = '{{ partida.id_user_2}}';
-  const my_name = '{{session.nome}}';
-  const oponente = id_user_1 == '{{session.logado}}'? '{{partida.user2.nome}}' : '{{partida.user1.nome}}' ;
+//Lógica do Game
   game.load(fen); // fen é a posição das peças no tabuleiro
 
   const board = Chessboard('board', {
@@ -260,3 +219,78 @@
     updateStatus();
   });
 </script> 
+{{!-- 
+ <script>
+
+  (function () {
+
+  $("#chat-history").scrollTop($('#messages').height());
+
+  const socket = io();
+  const partida = 44;
+  const user_w = '16';
+  const user_b = '15';
+  const user_current = '16';
+  const my_color = 'white';
+  const my_name = 'Sthefanie Jofer Gomes Passo';
+  const op_color = 'black';
+  const op_name = 'Rayane M. Pinheiro';
+  const $status = $('#status');
+
+  socket.emit('b_ok', { partida:partida });
+
+  $("#enviar").click(function () {
+    let mensagem = {
+      partida: 44,
+      user: { id: user_current, nome: my_name},
+      color: my_color,
+      mensagem: $("#message-to-send").val(),
+      date: new Date(Date.now()).toLocaleString()
+    };
+    socket.emit('mensagem', mensagem);
+    $("#message-to-send").val("");
+    appendMensagem(mensagem, 'right', my_color);
+    $("#chat-history").scrollTop($('#messages').height());
+  });  
+
+  $("#message-to-send").keypress(function (e) {
+    if(e.which == 13) {
+      $("#enviar").click();
+      return false;
+    }   
+  });
+
+  socket.on('mensagem', function(mensagem){
+    appendMensagem(mensagem, 'left', op_color);
+    $("#chat-history").scrollTop($('#messages').height());
+  });
+
+  function appendMensagem(mensagem, align, color) {
+
+    if (align == 'left') {
+      var messageData = 
+        `<div class="message-data">
+          <span class="message-piece"><i class="fas fa-chess-king"></i></span>              
+          <span class="message-data-name" >${mensagem.user.nome}</span>
+          <span class="message-data-time" >${mensagem.date}</span>  
+        </div>`;
+    } else {
+      var messageData = 
+        `<div class="message-data">
+          <span class="message-data-time" >${mensagem.date}</span>            
+          <span class="message-data-name" >${mensagem.user.nome}</span>          
+          <span class="message-piece"><i class="fas fa-chess-king"></i></span>              
+        </div>`;      
+    }
+
+    var newMessage = 
+     `<li class="${align}-message ${color}-message clearfix">
+        ${messageData}
+        <div class="message">
+          ${mensagem.mensagem}
+        </div>        
+      </li>`;
+
+    $("#messages").append(newMessage);
+  }
+</script> --}}

@@ -2,26 +2,22 @@
     Curso</legend>
 <div class="row">
     <div class="col-md-8 offset-md-2">
-        <table class="table table-hover">
+        <table class="table table-hover text-center">
             <tbody>
-                <tr class="table-dark">
+                <tr class="table-light">
                     <th scope="row">Sigla</th>
                     <td>Nome do Curso</td>
                     <td>Opções</td>
                 </tr>
                 {{#each cursos}}
-                <tr class="table-light ext-white">
-                    <th scope="row">
-                        <a class="text-white">{{sigla}}</a>
-                    </th>
+                <tr class="table-dark ext-white">
+                    <th scope="row">{{sigla}}</th>
+                    <td>{{nome}}</a></td>
                     <td>
-                        <a class="text-white">{{nome}}</a>
-                    </td>
-                    <td>
-                        <a class="text-white" href="/curso/read/{{id}}">
+                        <a style="color:black" href="/curso/read/{{id}}">
                             <i class="fa fa-eye" aria-hidden="true"></i>
                         </a>
-                        <a class="text-white" href="/curso/update/{{id}}">
+                        <a style="color:black" href="/curso/update/{{id}}">
                             <i class="fa fa-pencil-alt" aria-hidden="true"></i>
                         </a>
                         <a style="color:black" target="_blank" href="#" data-toggle="modal" data-target="#modal-delete" data-id={{id}} data-nome={{nome}}><i class="fa fa-trash-alt" aria-hidden="true"></i></a>

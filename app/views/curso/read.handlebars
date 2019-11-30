@@ -2,8 +2,9 @@
     {{curso.nome}}</legend>
 <div class="col">
     <div class="float-right mt-3">
+        <input type="hidden" name="_csrf" value="{{csrf}}">
         <a role="button" href="/curso" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>&nbsp;&nbsp;Voltar</a>
-        <a role="button" href="/curso/update/{{id}}" class="btn btn-secondary"><i class="fa fa-pencil-alt"></i>&nbsp;&nbsp;Editar</a>
+        <a role="button" href="/curso/update/{{curso.id}}" class="btn btn-secondary"><i class="fa fa-pencil-alt" ></i>&nbsp;&nbsp;Editar</a>
     </div>
 </div>
 <div class="row">

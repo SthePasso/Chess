@@ -47,8 +47,6 @@ const update = async (req, res) => {
             csrf: req.csrfToken()
         });
     } else {
-        console.log(">>>>>>>>>>>>>>>>>>");
-
         curso.sigla = req.body.sigla;
         curso.nome = req.body.nome;
         curso.descricao = req.body.descricao;

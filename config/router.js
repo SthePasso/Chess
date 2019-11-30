@@ -20,14 +20,14 @@ router.get('/logout',             estaLogado, MainController.logout)//logout
 
 
 // CursoController
-router.get('/curso' ,               cursoController.index);//curso
-router.get('/curso/read/:id' ,      cursoController.read);
-router.get('/curso/create' ,        cursoController.create);
-router.post('/curso/create' ,       cursoController.create);
-router.get('/curso/update/:id' ,    cursoController.update);
-router.post('/curso/update/:id' ,   cursoController.update);
-router.post('/curso/remove/:id' ,   cursoController.remove);
-router.get('/curso/remove/:id' ,   cursoController.remove);
+router.get('/curso' ,               estaLogado, cursoController.index);//curso
+router.get('/curso/read/:id' ,      estaLogado, cursoController.read);
+router.get('/curso/create' ,        estaLogado, cursoController.create);
+router.post('/curso/create' ,       estaLogado, cursoController.create);
+router.get('/curso/update/:id' ,    estaLogado, cursoController.update);
+router.post('/curso/update/:id' ,   estaLogado, cursoController.update);
+router.post('/curso/remove/:id' ,   estaLogado, cursoController.remove);
+router.get('/curso/remove/:id' ,    estaLogado, cursoController.remove);
 
 
 

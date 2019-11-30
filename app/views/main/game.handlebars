@@ -18,7 +18,8 @@
       <div class="chat h-100" role="document">
         <div class="modal-content h-100" id="conversa">
           <div class="modal-header">
-          <h5 class="modal-title" id="oponente">Oponente{{!-- oponente --}}</h5>
+          <h5 class="modal-title" id="oponente">
+            {{!-- oponente --}}</h5>
           </div>
           <div class="modal-body">
           <ul id="msg">{{!-- mensagem --}}</ul>
@@ -49,6 +50,9 @@
   const socket = io();
   const botao = document.getElementById('botao');
   const msgs = document.getElementById('msg');
+//  const oponente = id_user_1 == '{{session.logado}}'? '{{partida.user2.nome}}' : '{{partida.user1.nome}}' ;
+  
+  
   botao.onclick = () => {
     var message = document.getElementById('textMessage');
     socket.emit('oi', message.value);

@@ -1,31 +1,64 @@
 <legend class="text-center">
-    Ranking</legend>
+    Curso</legend>
 <div class="row">
     <div class="col-md-8 offset-md-2">
         <table class="table table-hover">
             <tbody>
-                <tr class="table-light">
+                <tr class="table-dark">
                     <th scope="row">Sigla</th>
                     <td>Nome do Curso</td>
                     <td>Opções</td>
                 </tr>
                 {{#each cursos}}
-                <tr class="table-dark">
-
-                    <th scope="row">{{sigla}}</th>
-                    <td>{{nome}}</td>
-                    <td class="delete-curso" href="#" data-id="1" data-nome="{{nome}}">
-                        <i class="fa fa-trash-alt" aria-hidden="true"></i>
+                <tr class="table-light ext-white">
+                    <th scope="row">
+                        <a class="text-white">{{sigla}}</a>
+                    </th>
+                    <td>
+                        <a class="text-white">{{nome}}</a>
+                    </td>
+                    <td>
+                        <a class="text-white" href="/curso/read/{{id}}">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </a>
+                        <a class="text-white" href="/curso/update/{{id}}">
+                            <i class="fa fa-pencil-alt" aria-hidden="true"></i>
+                        </a>
+                        <a style="color:black" target="_blank" href="#" data-toggle="modal" data-target="#modal-delete" data-id={{id}} data-nome={{nome}}><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
                     </td>
                 </tr>
+                <div class="modal fade" id="modal-delete">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Apagar Curso</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Deseja mesmo apagar o curso
+                                    <span id="curso-nome">{{nome}}</span>?</p>
+                            </div>
+                            <div class="modal-footer">
+                                {{!-- <form action="/curso/remove/{{id}}" method="POST"> --}}
+                                    {{!-- <input type="hidden" name="_csrf" value="{{csrf}}"> --}}
+                                    <a href="/curso/remove/{{id}}"><button type="submit" data-dismiss="modal" id="delete-curso-confirma" class="btn btn-primary"  value={{curso}} >Sim</button>
+                                    </a>{{!-- <button type="submit" class="btn btn-primary" data-dismiss="modal" id="delete-curso-confirma" value={{id}}>Sim</button> --}}
+                                {{!-- </form> --}}
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 {{/each}}
             </tbody>
         </table>
 
-    <input type="hidden" name="_csrf" value="{{csrf}}">
-    <a type="submit" class="btn btn-primary float-right" href="/curso/create" >Adicionar Curso</a>
+
+        <input type="hidden" name="_csrf" value="{{csrf}}">
+        <a type="submit" class="btn btn-primary float-right" href="/curso/create">Adicionar Curso</a>
 
 
     </div>
 </div>
-

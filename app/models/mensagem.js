@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     underscored: true,
-    tableName: "mensagem"
+    tableName: "Mensagems"
   });
   mensagem.associate = function(models) {
     // associations can be defined here

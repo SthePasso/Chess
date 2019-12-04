@@ -54,9 +54,20 @@ const partida = async (req, res) => {
         ]
       });
     }
+
+    const mensagensAntigas = await Mensagem.findAll({ 
+      attributes: [
+        ['created_at', 'now'],
+        'id_user',
+        'mensagem'
+      ],
+      where: { id_partida: partidaId } 
+    });
+
     return res.render("main/game", {
       color: criador? 'w':'b',
-      partida: partida 
+      partida: partida,
+      mensagensAntigas: mensagensAntigas.map(e =>e.get({plain:true}))
     })
   }
   

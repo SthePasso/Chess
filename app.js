@@ -75,16 +75,20 @@ app.use('/',(req, res, next) => {
 });
 
 io.on('connect', (client) => {
-
   console.log("usuario conectado");
-  const uid = client.id.substr(0, 4);
-  var sala = 1;
+  const sala = client.handshake.query.id_partida;
   client.join(sala);
 
-  client.on('oi', (oi) => {
-    console.log(oi);
-    client.emit('oi', 'Você disse: ' + oi);
-    client.to(sala).broadcast.emit('oi', 'O usuário ' + uid + ' disse: ' + oi);
+  client.on('salvar-msg', (message) => {
+    // client.emit('oi', 'Você disse: ' + oi);
+    models.mensagem.create({
+      id_partida: sala,
+      id_user: message.id_user,
+      mensagem: message.mensagem,
+      created_at: new Date(message.now)
+    });
+    
+    io.in(sala).emit('nova-msg', message);
   });
 
   client.on('mudarSala', (s) => {

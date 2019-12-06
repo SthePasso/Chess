@@ -59,7 +59,7 @@ const partida = async (req, res) => {
       attributes: [
         ['created_at', 'now'],
         'id_user',
-        'mensagem'
+        'mensagem',
       ],
       where: { id_partida: partidaId } 
     });
@@ -67,7 +67,9 @@ const partida = async (req, res) => {
     return res.render("main/game", {
       color: criador? 'w':'b',
       partida: partida,
-      mensagensAntigas: mensagensAntigas.map(e =>e.get({plain:true}))
+      mensagensAntigas: mensagensAntigas.map(e =>e.get({plain:true})),
+      nomeOponente: criador? partida.user2.nome : partida.user1.nome
+      //id_user_1 == '{{session.logado}}' ? '{{partida.user2.nome}}' : '{{partida.user1.nome}}'
     })
   }
   

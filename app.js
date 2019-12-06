@@ -87,8 +87,7 @@ io.on('connect', (client) => {
       mensagem: message.mensagem,
       created_at: new Date(message.now)
     });
-    
-    io.in(sala).emit('nova-msg', message);
+    client.broadcast.emit('nova-msg', message);
   });
 
   client.on('mudarSala', (s) => {

@@ -21,15 +21,15 @@ const isLogged = function (expreq, options) {
 
 
 function createMessage(message, my_id, color) {
-    var propria =  message.id_user == my_id;
+    var propria = message.id_user == my_id;
     var align = propria ? 'right' : 'left';
-    var cor = propria ? (color == 'b' ? 'black' : 'white') : (color == 'b' ? 'white' : 'black'); 
+    var cor = propria ? (color == 'b' ? 'black' : 'white') : (color == 'b' ? 'white' : 'black');
     var raw = `
       <li class="${align}-message ${cor}-message">
         <div class="message-data">
-          ${propria ? '' : '<span class="message-piece"><i class="fas fa-chess-king"></i></span>'}
-          <span class="message-data-time">${new Date(message.now).toLocaleTimeString()}</span>
-          ${propria ? '<span class="message-piece"><i class="fas fa-chess-king"></i></span>' : ''}
+            ${propria ? '' : '<span class="message-piece"><i class="fas fa-chess-king"></i></span>'}
+            <span class="message-data-time">${new Date(message.now).toLocaleTimeString()}</span>
+            ${propria ? '<span class="message-piece"><i class="fas fa-chess-king"></i></span>' : ''}
         </div>
         <div class="message">${message.mensagem}</div>
       </li>

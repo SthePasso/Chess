@@ -380,7 +380,7 @@ pre {
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black
 }
 
-.ul {
+ul {
   list-style: none;
   padding: 0px 10px
 }
@@ -450,7 +450,7 @@ pre {
   padding: 0px;
   border-bottom: 2px solid white;
   overflow-y: scroll;
-  height: 460px
+  height: 400px
 }
 
 .chat-history .message-data {
@@ -492,6 +492,7 @@ pre {
 }
 
 .chat-history .message {
+  word-break: break-word;
   font-weight: 700;
   background: #94C2ED;
   padding: 10px 12px;
@@ -553,7 +554,7 @@ pre {
 .chat .chat-message textarea {
   width: 100%;
   border: none;
-  padding: 10px 10px;
+  padding: 10px 10px 5px 10px;
   font: 14px/22px "Lato", Arial, sans-serif;
   border-radius: 5px;
   resize: none
@@ -597,11 +598,22 @@ pre {
   color: #94C2ED
 }
 
-.clearfix:after {
-  visibility: hidden;
-  display: block;
-  font-size: 0;
-  content: " ";
-  clear: both;
-  height: 0
+// .clearfix:after {
+//   visibility: hidden;
+//   display: block;
+//   font-size: 0;
+//   content: " ";
+//   clear: both;
+//   height: 0
+// }
+#oponente {
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+} 
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

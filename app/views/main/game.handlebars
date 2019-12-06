@@ -17,8 +17,9 @@
     </div>
 
     <div class="chat">
-      <div class="chat-history">
-        <ul id="messages">
+      <div id="oponente" class = "truncate">{{nomeOponente}}</div><hr>
+      <div id="chat-history" class="chat-history">
+        <ul id="messages" style="list-style-type: none">
           {{{criarMensagens mensagensAntigas session.logado color}}}
         </ul>
       </div>
@@ -48,7 +49,7 @@
   const id_user_2 = '{{ partida.id_user_2}}';
   const my_name = '{{session.nome}}';
   const my_id = Number.parseInt('{{session.logado}}', 10);
-  const oponente = id_user_1 == '{{session.logado}}' ? '{{partida.user2.nome}}' : '{{partida.user1.nome}}';
+  const oponente = '{{nomeOponente}}';
   //  const oponente = id_user_1 == '{{session.logado}}'? '{{partida.user2.nome}}' : '{{partida.user1.nome}}' ;
   const socket = io({
     query: {
@@ -57,18 +58,21 @@
   });
 
   //Lógica do Chat  
-  botao.onclick = () => {
-    const mensagem = $("#message-to-send").val();
+  $("#enviar").click(() => {
+    var mensagem = $("#message-to-send").val();
     if (!mensagem.trim()) return;
 
-    const message = {
+    var message = {
       id_user: my_id,
+      name: my_name,
       mensagem: mensagem,
       now: Date.now(),
     };
-
     socket.emit('salvar-msg', message);
-  }
+    appendMensagem(message);
+    $("#message-to-send").val("");
+    $("#chat-history").scrollTop($("#messages").height());
+  })
 
   socket.on('nova-msg', (message) => {
     appendMensagem(message);
@@ -89,39 +93,12 @@
       </li>
     `;
 
-    msgs.appendChild(raw);
+    $("#messages").append(raw);
 
     $("#message-to-send").val('');
     $("#chat-history").scrollTop($('#messages').height());
-    return;
-
-    /*if (align == 'left') {
-      var messageData = 
-        `<div class="message-data">
-          <span class="message-piece"><i class="fas fa-chess-king"></i></span>              
-          <span class="message-data-name" >${mensagem.user.nome}</span>
-          <span class="message-data-time" >${mensagem.date}</span>  
-        </div>`;
-    } else {
-      var messageData = 
-        `<div class="message-data">
-          <span class="message-data-time" >${mensagem.date}</span>            
-          <span class="message-data-name" >${mensagem.user.nome}</span>          
-          <span class="message-piece"><i class="fas fa-chess-king"></i></span>              
-        </div>`;      
-    }*/
-
-    var newMessage =
-      `<li class="${align}-message ${color}-message clearfix">
-        ${messageData}
-        <div class="message">
-          ${mensagem.mensagem}
-        </div>        
-      </li>`;
-
-    $("#messages").append(newMessage);
   }
-
+  $("#chat-history").scrollTop($("#messages").height());
   //Lógica do Game
   game.load(fen); // fen é a posição das peças no tabuleiro
 
